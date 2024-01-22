@@ -1,11 +1,21 @@
+import json
 import time
 from ftplib import FTP, error_temp
 
 
-ftp_host = "ftp.host.com" # Your FTP Hostname
-ftp_port = 21 # Your FTP Port
-ftp_user = "Username" # Your FTP Username
-ftp_pswd = "P4$$W0rd" # Your FTP Password
+creds_file = "creds.json"
+
+
+def get_creds(File):
+    with open(File, "r") as file:
+        content = file.read()
+        file.close()
+    data = json.loads(content)
+    User = data['user']
+    Pass = data['pass']
+    Host = data['host']
+    Port = data['port']
+    return Host, Port, User, Pass
 
 
 def is_file(ftp, item):
@@ -90,8 +100,8 @@ def find_unnecessary_files(ftp, path, attempt=1):
         print(f"An unexpected error occurred: {e}")
 
 
-def ftp_session():
-    ftp = FTP(ftp_host)
+def ftp_session(ftp_host, ftp_port, ftp_user, ftp_pswd):
+    ftp = FTP(ftp_host, ftp_port)
     ftp.login(ftp_user, ftp_pswd)
     ftp.set_pasv(True)
     print("Successfully connected with FTP")
@@ -107,7 +117,8 @@ def reconnect(ftp):
 
 
 def main():
-    ftp = ftp_session()
+    host, port, user, pswd = get_creds(creds_file)
+    ftp = ftp_session(host, port, user, pswd)
     try:
         clear_directory(ftp, '/tmp')
         find_unnecessary_files(ftp, '/')

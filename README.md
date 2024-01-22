@@ -7,7 +7,7 @@ A Python script to cleanup a server using an FTP connection
 3. Monitor Output: Watch the console output for progress updates and actions taken.
 
 ### Features
-○ Targeted File Deletion: Automatically deletes files with extensions like .txt, .zip, .gzip.\n
+○ Targeted File Deletion: Automatically deletes files with extensions like .txt, .zip, .gzip.<br>
 ○ Directory Cleaning: Clears contents of directories named 'backup' and 'tmp', while keeping 'tmp' directory intact.
 ○ Recursive Search: Navigates through the server's file structure to ensure comprehensive cleanup.
 ○ Robust Error Handling: Includes reconnection logic for handling network interruptions and server timeouts.

@@ -2,7 +2,7 @@
 A Python script to cleanup a server using an FTP connection<br>
 
 ### Usage
-1. Configure FTP Credentials: Set your FTP server's hostname, port, username, and password in the script.
+1. Configure FTP Credentials: Set your FTP server's hostname, port, username, and password inside 'creds.json' in the same format.
 2. Run the Script: Execute the script. It will first clear the 'tmp' directory, then proceed to delete unnecessary files and directories.
 3. Monitor Output: Watch the console output for progress updates and actions taken.<br>
 

@@ -6,16 +6,17 @@ from ftplib import FTP, error_temp
 creds_file = "creds.json"
 
 
-def get_creds(File):
-    with open(File, "r") as file:
-        content = file.read()
-        file.close()
-    data = json.loads(content)
-    User = data['user']
-    Pass = data['pass']
-    Host = data['host']
-    Port = data['port']
-    return Host, Port, User, Pass
+def get_creds(file):
+    with open(file, "r") as file:
+        data = json.load(file)
+    creds_list = []
+    for creds in data:
+        host = creds['Host']
+        port = creds['Port']
+        user = creds['Username']
+        pswd = creds['Password']
+        creds_list.append((host, port, user, pswd))
+    return creds_list
 
 
 def is_file(ftp, item):
@@ -117,18 +118,20 @@ def reconnect(ftp):
 
 
 def main():
-    host, port, user, pswd = get_creds(creds_file)
-    ftp = ftp_session(host, port, user, pswd)
-    try:
-        clear_directory(ftp, '/tmp')
-        find_unnecessary_files(ftp, '/')
-    except Exception as e:
-        print(f"An error occurred in main: {e}")
-    finally:
+    creds_list = get_creds('creds.json')
+    for host, port, user, pswd in creds_list:
+        print(f"Connecting to FTP server: {host}")
+        ftp = ftp_session(host, port, user, pswd)
         try:
-            ftp.quit()
-        except Exception:
-            pass
+            clear_directory(ftp, '/tmp')
+            find_unnecessary_files(ftp, '/')
+        except Exception as e:
+            print(f"An error occurred: {e}")
+        finally:
+            try:
+                ftp.quit()
+            except Exception as e:
+                print(f"Error closing FTP connection: {e}")
 
 
 if __name__ == "__main__":

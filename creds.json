@@ -1,0 +1,14 @@
+{
+  "Host-identifier (Does not affect)": { 
+    "Host": "FTP.host.com",
+    "Port": 21,
+    "Username": "Username",
+    "Password": "P4$$W0rd"
+  },
+  "Host-identifier 2": { 
+    "Host": "FTP.host.net",
+    "Port": 21,
+    "Username": "Username",
+    "Password": "P4$$W0rd"
+  }  
+}
